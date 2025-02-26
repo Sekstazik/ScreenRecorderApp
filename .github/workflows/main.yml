@@ -1,0 +1,39 @@
+name: Build APK
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y python3-pip openjdk-17-jdk autoconf automake \
+            pkg-config libtool zlib1g-dev libssl-dev libffi-dev ccache \
+            libltdl-dev libncurses5 libjpeg-dev libpng-dev libfreetype6-dev \
+            cython git unzip
+
+      - name: Install Buildozer
+        run: |
+          pip install --upgrade pip
+          pip install buildozer
+          buildozer android clean
+
+      - name: Build APK
+        run: |
+          buildozer -v android debug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: ScreenRecorderAPK
+          path: bin/*.apk

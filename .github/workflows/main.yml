@@ -19,8 +19,8 @@ jobs:
           sudo apt update
           sudo apt install -y python3-pip openjdk-17-jdk autoconf automake \
             pkg-config libtool zlib1g-dev libssl-dev libffi-dev ccache \
-            libltdl-dev libncurses5 libjpeg-dev libpng-dev libfreetype6-dev \
-            cython git unzip
+            libltdl-dev libncurses6 libjpeg-dev libpng-dev libfreetype6-dev \
+            cython3 git unzip
 
       - name: Install Buildozer
         run: |
